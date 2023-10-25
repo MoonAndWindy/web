@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<script src="H20213592-231011/videoResource.js">
+	</script>
+	<style>
+		body{
+			text-align: center;
+		}
+		#LOGO{
+			float: right;
+			background-color: red;
+		}
+	</style>
+		<div id="LOGO">
+			该视频为1/共118个
+		</div>
+	<body>
+		<video src="teacherT/videoTemp/v02004040000bpa9p3egncoejcefuv4g" id="video"></video>
+		<div>
+			<input type="button" value="PLAY" id="play">
+			<input type="button" value="STOP" id="STOP">
+			<input type="button" value="PRE" id="PRE">
+			<input type="button" value="NEXT" id="NEXT">
+			<input type="text" value="1" id="videoNO"/>
+			<input type="button" value="search" id="search"/>
+			<input type="text" id="videoTime"/>
+		</div>
+	</body>
+	<script>
+		var video=document.getElementById("video");  /* 抓取video的对象,用于播放视频 */
+		var play=document.getElementById("play");	 /* 抓取video的对象,用于播放视频 */	 	
+		var stop=document.getElementById("STOP");	 /* 抓取video的对象,用于播放视频 */
+		var next=document.getElementById("NEXT");	 /* 抓取video的对象,用于播放视频 */
+		var preview=document.getElementById("PRE");  /* 抓取video的对象,用于播放视频 */
+		var videoNO=document.getElementById("videoNO"); /* 抓取video的对象,用于播放视频 */
+		var search=document.getElementById("search");	/* 抓取video的对象,用于播放视频 */
+		var videoTime=document.getElementById("videoTime");
+		
+		var textConten=document.getElementById("LOGO");
+		
+		var i=0; /* 用于计算视频的演进位置,即第几个视频 */
+		
+		/* 
+		videoNO.value=i; 用于刷新视频的显示编号
+		 */
+		
+		var textLogoConten=function(){
+			textConten.textContent="该视频为"+(i+1)+"/共118个";     /* 设置一个logo用于遮盖西瓜视频的logo */
+		}
+		
+		var setVideoSize=function(){
+			video.style.width = document.body.clientWidth + "px";  /* 设置视频的的宽度为客户端的拥有的宽度 */
+		}	
+			 
+		window.setInterval(         								/* 设置视频的时间获取方法并执行;使时间打印在inpiut框中 */
+		function(){
+			videoTime.value=Math.round(video.currentTime) + "s";
+		},1000
+		);
+			
+		
+		play.onclick=function(){
+			video.play();
+			videoNO.value=i+1; 
+			textLogoConten();
+			setVideoSize();
+		};
+		
+		stop.onclick=function(){
+			video.pause();
+		};
+		
+		next.onclick=function(){
+			i++;
+			if(i==118)
+			i=0;
+			video.src="teacherT/videoTemp/"+map4[i];
+			video.play();
+			videoNO.value=i+1;
+			textLogoConten();
+			setVideoSize();
+		};
+		
+		preview.onclick=function(){
+			if(i==0)
+			i=118;
+			i--;
+			video.src="teacherT/videoTemp/"+map4[i];
+			video.play();
+			videoNO.value=i+1;
+			textLogoConten();
+			setVideoSize();
+		};
+		
+		search.onclick=function(){
+				if(Number(videoNO.value)){
+				video.src="teacherT/videoTemp/"+map4[videoNO.value-1];
+				i=Number(videoNO.value);
+				}
+				else{
+					alert("输入的是非数字,请重新输入");
+				}
+				textLogoConten();
+				setVideoSize();
+		};
+
+		
+	</script>
+</html>
